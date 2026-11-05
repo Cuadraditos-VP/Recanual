@@ -17,7 +17,7 @@ body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,"Segoe 
 .hd{display:flex;gap:14px;align-items:center}.hd img{width:92px;height:92px;object-fit:contain;background:#fff;border-radius:50%}
 .hd small{display:block;font-size:11px;font-weight:700;letter-spacing:.3px}.hd h1{margin:4px 0 0;font-size:26px;text-transform:lowercase}
 select,button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);padding:8px;border-radius:4px;cursor:pointer}
-.sel{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap;align-items:center}.sel select{flex:1;min-width:140px}.sel button{flex:0 0 auto}
+.sel{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap;align-items:center}.mt{position:relative;cursor:pointer}.mt select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:16px;border:0;padding:0}.sel button{flex:0 0 auto}
 .r{display:flex;border:1px solid var(--bd);margin:8px 0;font-style:italic;font-weight:700;font-size:14px}
 .r span{padding:9px 10px}.r span:first-child{flex:1;border-right:1px solid var(--bd)}.r span:nth-child(2){width:46%;text-align:right}
 .t{background:var(--ac);font-size:16px}.t span:nth-child(2){color:var(--ac2)}
@@ -70,8 +70,8 @@ fieldset{border:0;background:#a8f3e6;margin:0;padding:0 8px 10px}legend{display:
 </style><script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head><body><div class="w">
 <div class="nav"><button id="tr" class="on">Caja de Empleados</button><button id="tp">Productividad</button></div>
-<div class="card"><div class="hd"><img src="icons/icon-192.png" alt="Logo" onerror="this.style.display='none'"><div><small id="sub">LIQUIDACIÓN CAJA DE EMPLEADOS</small><h1 id="mes"></h1></div></div>
-<div class="sel"><select id="sel"></select><button id="nuevo">Registro</button><button id="btnGraf" type="button">Gráficos</button><button id="btnCmp" type="button">Comparar</button><button id="btnPe" type="button">Por empleado</button></div>
+<div class="card"><div class="hd"><img src="icons/icon-192.png" alt="Logo" onerror="this.style.display='none'"><div><small id="sub">LIQUIDACIÓN CAJA DE EMPLEADOS</small><h1 class="mt"><span id="mes"></span><select id="sel" aria-label="Elegir mes"></select></h1></div></div>
+<div class="sel"><button id="nuevo">Registro</button><button id="btnGraf" type="button">Gráficos</button><button id="btnCmp" type="button">Comparar</button><button id="btnPe" type="button">Por empleado</button></div>
 <div id="filas"></div><div class="n" id="nota"></div>
 <div class="ex"><button id="bExp" type="button">Exportar JSON</button><label class="imp">Importar JSON<input id="imp" type="file" accept=".json,application/json" hidden></label><span id="dsta"></span></div></div></div>
 <dialog id="dlg"><div class="tb"><span>Registro</span><b id="x">✕</b></div><div class="body">
