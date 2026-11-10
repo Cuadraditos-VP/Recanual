@@ -335,12 +335,16 @@ function imPreview(){const u=URL.createObjectURL(imBlob),im=$("imPrev");if(im.sr
   $("imShare").hidden=!canShareImg();$("imCopy").hidden=!canCopyImg();$("imCopy").textContent="Copiar imagen";
   $("imNote").textContent=canCopyImg()?"Para WhatsApp Web: tocá Copiar imagen y pegala en el chat con Ctrl+V.":"En el celular también podés mantener apretada la imagen para guardarla.";$("dlgImg").showModal()}
 const canCopyImg=()=>!!(navigator.clipboard&&navigator.clipboard.write&&window.ClipboardItem);
-const isPhone=()=>matchMedia("(pointer:coarse)").matches;
+const isPhone=()=>/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
 $("btnImg").onclick=async()=>{const b=$("btnImg"),txt=b.textContent;b.disabled=true;b.textContent="Generando…";
   try{imBlob=await snapCard();if(!imBlob)throw 0;
     const r=rows()[+$("sel").value];imName=(mode=="rec"?"caja-empleados-":"productividad-")+(r?r.m.toLowerCase().replace(/\s+/g,"-"):"mes")+".png";
-    if(isPhone()&&canShareImg()){try{await navigator.share({files:[imFile()]});return}catch(e){if(e&&e.name==="AbortError")return}}
-    imPreview()}
+    if(isPhone()){if(canShareImg()){try{await navigator.share({files:[imFile()]});return}catch(e){if(e&&e.name==="AbortError")return}}
+      return imPreview()}
+    /* Compu: copia al portapapeles (para pegar con Ctrl+V en WhatsApp Web) y además la descarga */
+    let copied=false;if(canCopyImg()){try{await navigator.clipboard.write([new ClipboardItem({"image/png":imBlob})]);copied=true}catch(e){}}
+    imDownload();
+    alert(copied?"Imagen copiada. En WhatsApp Web abrí el chat y pegala con Ctrl+V.\n(También quedó descargada.)":"Se descargó la imagen. Adjuntala en WhatsApp.")}
   catch(e){alert("No se pudo generar la imagen (hace falta internet la primera vez).")}
   finally{b.disabled=false;b.textContent=txt}};
 $("imShare").onclick=()=>navigator.share({files:[imFile()]}).catch(()=>{});
